@@ -8,8 +8,8 @@ class Category:
         self.name = name  # название категории
         self.description = description  # описание категории
         self.products = products  # товары
-        self.count_category += 1
-        self.count_products += len(products)
+        Category.count_category += 1
+        Category.count_products += len(products)
 
 
 class Product:

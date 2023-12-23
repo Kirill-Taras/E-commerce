@@ -1,12 +1,50 @@
+import json
+
+from scr.config import PRODUCTS_PATH
+
+
 class Category:
     """Класс категорий"""
 
-    def __init__(self, name: str, description: str, products: list):
-        pass
+    count_category = 0
+    category_list = list()
+    products = list()
+    count_products = 0
+
+    def __init__(self, name: str, description: str):
+        self.name = name  # название категории
+        self.description = description  # описание категории# товары
+        Category.count_category += 1
+        Category.category_list.append(self)
+
+    @classmethod
+    def new_category(cls, file_path):
+        with open(file_path, encoding="utf-8") as fl:
+            category_new = json.load(fl)
+        for row in category_new:
+            name, description = row["name"], row["description"]
+            cls(name, description)
 
 
 class Product:
+    """Класс продуктов"""
+
+    product_list = list()
 
     def __init__(self, name: str, description: str, quality: int, price: float):
-        pass
+        self.name = name  # название продукта
+        self.description = description  # описание продукта
+        self.quality = quality  # количество в наличии
+        self.price = price  # цена
+        Category.products.append(self)
+        Category.count_products = len(Category.products)
 
+    @classmethod
+    def new_product(cls, file_path):
+        with open(file_path, encoding="utf-8") as fl:
+            product_new = json.load(fl)
+        for row in product_new:
+            products = row["products"]
+            for product in products:
+                name, description, price, quantity = product["name"], product["description"], product["price"], product["quantity"]
+                cls(name, description, price, quantity)

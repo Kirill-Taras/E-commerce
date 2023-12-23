@@ -2,14 +2,13 @@ class Category:
     """Класс категорий"""
 
     count_category = 0
+    products = list()
     count_products = 0
 
-    def __init__(self, name: str, description: str, products: list):
+    def __init__(self, name: str, description: str):
         self.name = name  # название категории
-        self.description = description  # описание категории
-        self.products = products  # товары
+        self.description = description  # описание категории# товары
         Category.count_category += 1
-        Category.count_products += len(products)
 
 
 class Product:
@@ -20,3 +19,5 @@ class Product:
         self.description = description  # описание продукта
         self.quality = quality  # количество в наличии
         self.price = price  # цена
+        Category.products.append(Product)
+        Category.count_products = len(Category.products)

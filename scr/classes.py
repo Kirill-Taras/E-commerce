@@ -54,3 +54,15 @@ class Product:
             for product in products:
                 name, description, price, quantity = product["name"], product["description"], product["price"], product["quantity"]
                 cls(name, description, price, quantity)
+
+    @classmethod
+    def product_object(cls, name: str, description: str, quality: int, price: float):
+        for product in Category.products_list:
+            if name == product.name:
+                if price > product.price:
+                    product.price = price
+                product.quality += quality
+                return product
+        new_prod = cls(name, description, quality, price)
+        Category.products_list.append(new_prod)
+        return new_prod

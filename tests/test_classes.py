@@ -36,7 +36,17 @@ def test_new_category():
 
 
 def test_new_product():
-    Category.products = list()
+    Category.products_list = list()
     Product.new_product(PRODUCTS_PATH)
-    pr_1 = Category.products[0]
+    pr_1 = Category.products_list[0]
     assert pr_1.name == "Samsung Galaxy C23 Ultra"
+
+
+@pytest.mark.parametrize("obj, expected", [(Category("Елочные игрушки", "На НГ"), ['Сыр, 100.5 руб. Остаток: 2 шт.', 'Gbdj, 100.5 руб. Остаток: 2 шт.', 'qqq, 100.5 руб. Остаток: 2 шт.'])])
+def test_products(obj, expected):
+    Category.products_list = list()
+    prod1 = Product("Сыр", "С дырками", 2, 100.50)
+    prod2 = Product("Gbdj", "С дырками", 2, 100.50)
+    prod3 = Product("qqq", "С дырками", 2, 100.50)
+
+    assert obj.get_products == expected

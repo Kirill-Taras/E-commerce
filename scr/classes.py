@@ -1,19 +1,18 @@
 import json
 
-from scr.config import PRODUCTS_PATH
-
 
 class Category:
     """Класс категорий"""
 
     count_category = 0
     category_list = list()
-    products = list()
+    products_list = list()
     count_products = 0
 
     def __init__(self, name: str, description: str):
         self.name = name  # название категории
         self.description = description  # описание категории# товары
+        self.__products = Category.products_list
         Category.count_category += 1
         Category.category_list.append(self)
 
@@ -36,8 +35,8 @@ class Product:
         self.description = description  # описание продукта
         self.quality = quality  # количество в наличии
         self.price = price  # цена
-        Category.products.append(self)
-        Category.count_products = len(Category.products)
+        Category.products_list.append(self)
+        Category.count_products = len(Category.products_list)
 
     @classmethod
     def new_product(cls, file_path):

@@ -21,10 +21,10 @@ def test_product():
 
 
 def test_init_product(test_product):
-    assert test_product.name == "Сыр"
-    assert test_product.description == "С дырками"
-    assert test_product.quality == 2
-    assert test_product.price == 100.50
+    assert test_product.get_name() == "Сыр"
+    assert test_product.get_description() == "С дырками"
+    assert test_product.get_quality() == 2
+    assert test_product.get_price() == 100.50
     assert Category.count_products == 1
 
 
@@ -39,7 +39,7 @@ def test_new_product():
     Category.products_list = list()
     Product.new_product(PRODUCTS_PATH)
     pr_1 = Category.products_list[0]
-    assert pr_1.name == "Samsung Galaxy C23 Ultra"
+    assert pr_1.get_name() == "Samsung Galaxy C23 Ultra"
 
 
 @pytest.mark.parametrize("obj, expected", [(Category("Елочные игрушки", "На НГ"), ['Сыр, 100.5 руб. Остаток: 2 шт.', 'Gbdj, 100.5 руб. Остаток: 2 шт.', 'qqq, 100.5 руб. Остаток: 2 шт.'])])
@@ -50,3 +50,9 @@ def test_products(obj, expected):
     prod3 = Product("qqq", "С дырками", 2, 100.50)
 
     assert obj.get_products == expected
+
+
+def test_new_price():
+    prod1 = Product("Сыр", "С дырками", 2, 100.50)
+    prod1.price = 200
+    assert prod1.get_price == 200

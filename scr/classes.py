@@ -11,8 +11,8 @@ class Category:
 
     def __init__(self, name: str, description: str):
         self.name = name  # название категории
-        self.description = description  # описание категории# товары
-        self.__products = Category.products_list
+        self.description = description  # описание категории
+        self.__products = Category.products_list  # товары
         Category.count_category += 1
         Category.category_list.append(self)
 
@@ -38,12 +38,24 @@ class Product:
     product_list = list()
 
     def __init__(self, name: str, description: str, quality: int, price: float):
-        self.name = name  # название продукта
-        self.description = description  # описание продукта
-        self.quality = quality  # количество в наличии
-        self.price = price  # цена
+        self.__name = name  # название продукта
+        self.__description = description  # описание продукта
+        self.__quality = quality  # количество в наличии
+        self.__price = price  # цена
         Category.products_list.append(self)
         Category.count_products = len(Category.products_list)
+
+    def get_name(self):
+        return self.__name
+
+    def get_description(self):
+        return self.__description
+
+    def get_quality(self):
+        return self.__quality
+
+    def get_price(self):
+        return self.__price
 
     @classmethod
     def new_product(cls, file_path):
@@ -67,4 +79,15 @@ class Product:
         Category.products_list.append(new_prod)
         return new_prod
 
+    @property
+    def price(self):
+        return self.__price
 
+    @price.setter
+    def price(self, new_price):
+        user_answer = input(f"Вы уверены, что хотите изменить цену? (y/n):")
+        if user_answer.lower() == 'y':
+            self.__price = new_price
+            print("Цена успешно изменена.")
+        else:
+            print("Изменение цены отменено.")

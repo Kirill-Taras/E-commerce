@@ -16,6 +16,13 @@ class Category:
         Category.count_category += 1
         Category.category_list.append(self)
 
+    @property
+    def get_products(self):
+        self.__products = list()
+        for pr in Category.products_list:
+            self.__products.append(f"{pr.name}, {pr.price} руб. Остаток: {pr.quality} шт.")
+        return self.__products
+
     @classmethod
     def new_category(cls, file_path):
         with open(file_path, encoding="utf-8") as fl:

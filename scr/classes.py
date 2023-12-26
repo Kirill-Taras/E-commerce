@@ -45,17 +45,17 @@ class Product:
         Category.products_list.append(self)
         Category.count_products = len(Category.products_list)
 
-    def get_name(self):
+    @property
+    def name(self):
         return self.__name
 
-    def get_description(self):
+    @property
+    def description(self):
         return self.__description
 
-    def get_quality(self):
+    @property
+    def quality(self):
         return self.__quality
-
-    def get_price(self):
-        return self.__price
 
     @classmethod
     def new_product(cls, file_path):

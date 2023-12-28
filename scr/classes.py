@@ -109,15 +109,3 @@ class Product:
         total = self.price * self.quality
         total_other = other.price * other.quality
         return total + total_other
-
-
-# Category.products_list = list()
-# prod1 = Product("Сыр", "С дырками", 2, 100.50)
-# prod2 = Product("Gbdj", "С дырками", 2, 100.50)
-# prod3 = Product("qqq", "С дырками", 2, 100.50)
-# we = Category("Елочные игрушки", "На НГ")
-# print(we.name)
-# print(we.get_products)
-# print(prod3)
-# print(we)
-# print(prod3 + prod1)

@@ -56,3 +56,9 @@ def test_new_price():
     prod1 = Product("Сыр", "С дырками", 2, 100.50)
     prod1.price = 200
     assert prod1.price == 200
+
+
+def test_add_product():
+    prod1 = Product("Сыр", "С дырками", 2, 20)
+    prod2 = Product("Колбаса", "Вареная", 10, 10)
+    assert prod1 + prod2 == 140

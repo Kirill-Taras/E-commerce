@@ -109,3 +109,34 @@ class Product:
         total = self.price * self.quality
         total_other = other.price * other.quality
         return total + total_other
+
+
+class NextProduct:
+    """Итератор, возвращающий каждый продукт по очереди."""
+    def __init__(self, categ):
+        if not isinstance(categ, Category):
+            raise ValueError('Объект не пренадлежит категории')
+        self.categ = categ
+
+    def __iter__(self):
+        self.iter = self.categ.get_products
+        return self
+
+    def __next__(self):
+        if len(self.iter) > 0:
+            next_pr = self.iter.pop()
+            return next_pr
+        else:
+            raise StopIteration
+
+#
+# Category.products_list = list()
+# cat = Category("Елочные игрушки", "На НГ")
+# prod1 = Product("Сыр", "С дырками", 2, 100.50)
+# prod2 = Product("Gbdj", "С дырками", 2, 100.50)
+# prod3 = Product("qqq", "С дырками", 2, 100.50)
+# print(cat)
+#
+#
+# r = NextProduct(cat)
+# print(list(r))

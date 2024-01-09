@@ -1,6 +1,6 @@
 import pytest
 
-from scr.classes import Category, Product, NextProduct
+from scr.classes import Category, Product, NextProduct, Smartphone, LawnGrass
 from scr.config import PRODUCTS_PATH
 
 
@@ -72,3 +72,29 @@ def test_next_product():
     prod3 = Product("qqq", "С дырками", 2, 100.50)
     r = NextProduct(cat)
     assert list(r) == ['qqq, 100.5 руб. Остаток: 2 шт.', 'Gbdj, 100.5 руб. Остаток: 2 шт.', 'Сыр, 100.5 руб. Остаток: 2 шт.']
+
+
+def test_smartphone():
+    phone_1 = Smartphone("Apple 13",
+                         "Apple phone",
+                         10,
+                         50000,
+                         4,
+                         "13",
+                         128,
+                         "green")
+    assert phone_1.name == "Apple 13"
+    assert phone_1.color == "green"
+
+
+def test_lawngrass():
+    grass = LawnGrass("Grass  Super",
+                 "Nice",
+                 15,
+                 1000,
+                "USA",
+                "2 days",
+                 "green"
+                 )
+    assert grass.color == "green"
+    assert grass.description == "Nice"

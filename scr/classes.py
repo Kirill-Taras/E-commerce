@@ -129,14 +129,36 @@ class NextProduct:
         else:
             raise StopIteration
 
-#
-# Category.products_list = list()
-# cat = Category("Елочные игрушки", "На НГ")
-# prod1 = Product("Сыр", "С дырками", 2, 100.50)
-# prod2 = Product("Gbdj", "С дырками", 2, 100.50)
-# prod3 = Product("qqq", "С дырками", 2, 100.50)
-# print(cat)
-#
-#
-# r = NextProduct(cat)
-# print(list(r))
+
+class Smartphone(Product):
+
+    def __init__(self, name: str,
+                 description: str,
+                 quality: int,
+                 price: float,
+                 performance: str,
+                 model: str,
+                 memory: int,
+                 color: str
+                 ):
+        super().__init__(name, description, quality, price)
+        self.performance = performance
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+
+    def __init__(self, name: str,
+                 description: str,
+                 quality: int,
+                 price: float,
+                 country: str,
+                 period: str,
+                 color: str
+                 ):
+        super().__init__(name, description, quality, price)
+        self.country = country
+        self.period = period
+        self.color = color

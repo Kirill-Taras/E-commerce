@@ -17,10 +17,14 @@ class Category:
         Category.category_list.append(self)
 
     @property
+    def products(self):
+        return self.__products
+
+    @property
     def get_products(self):
         self.__products = list()
         for pr in Category.products_list:
-            self.__products.append(f"{pr.name}, {pr.price} руб. Остаток: {pr.quality} шт.")
+            self.__products.append(f"{pr.__str__()}")
         return self.__products
 
     @classmethod
@@ -30,6 +34,12 @@ class Category:
         for row in category_new:
             name, description = row["name"], row["description"]
             cls(name, description)
+
+    def __len__(self):
+        return len(self.products)
+
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {self.__len__()} шт."
 
 
 class Product:
@@ -91,3 +101,42 @@ class Product:
             print("Цена успешно изменена.")
         else:
             print("Изменение цены отменено.")
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quality} шт."
+
+    def __add__(self, other):
+        total = self.price * self.quality
+        total_other = other.price * other.quality
+        return total + total_other
+
+
+class NextProduct:
+    """Итератор, возвращающий каждый продукт по очереди."""
+    def __init__(self, categ):
+        if not isinstance(categ, Category):
+            raise ValueError('Объект не пренадлежит категории')
+        self.categ = categ
+
+    def __iter__(self):
+        self.iter = self.categ.get_products
+        return self
+
+    def __next__(self):
+        if len(self.iter) > 0:
+            next_pr = self.iter.pop()
+            return next_pr
+        else:
+            raise StopIteration
+
+#
+# Category.products_list = list()
+# cat = Category("Елочные игрушки", "На НГ")
+# prod1 = Product("Сыр", "С дырками", 2, 100.50)
+# prod2 = Product("Gbdj", "С дырками", 2, 100.50)
+# prod3 = Product("qqq", "С дырками", 2, 100.50)
+# print(cat)
+#
+#
+# r = NextProduct(cat)
+# print(list(r))

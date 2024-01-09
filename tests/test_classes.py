@@ -1,6 +1,6 @@
 import pytest
 
-from scr.classes import Category, Product
+from scr.classes import Category, Product, NextProduct
 from scr.config import PRODUCTS_PATH
 
 
@@ -56,3 +56,19 @@ def test_new_price():
     prod1 = Product("Сыр", "С дырками", 2, 100.50)
     prod1.price = 200
     assert prod1.price == 200
+
+
+def test_add_product():
+    prod1 = Product("Сыр", "С дырками", 2, 20)
+    prod2 = Product("Колбаса", "Вареная", 10, 10)
+    assert prod1 + prod2 == 140
+
+
+def test_next_product():
+    Category.products_list = list()
+    cat = Category("Елочные игрушки", "На НГ")
+    prod1 = Product("Сыр", "С дырками", 2, 100.50)
+    prod2 = Product("Gbdj", "С дырками", 2, 100.50)
+    prod3 = Product("qqq", "С дырками", 2, 100.50)
+    r = NextProduct(cat)
+    assert list(r) == ['qqq, 100.5 руб. Остаток: 2 шт.', 'Gbdj, 100.5 руб. Остаток: 2 шт.', 'Сыр, 100.5 руб. Остаток: 2 шт.']

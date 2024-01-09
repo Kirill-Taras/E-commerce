@@ -16,6 +16,17 @@ class Category:
         Category.count_category += 1
         Category.category_list.append(self)
 
+    def add_product(self, product):
+        """
+        Добавление продукта в категорию.
+        :param product: Продукт, который нужно добавить
+        """
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.count_products += 1
+        else:
+            raise ValueError("Невозможно добавить объект")
+
     @property
     def products(self):
         return self.__products

@@ -106,9 +106,12 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quality} шт."
 
     def __add__(self, other):
-        total = self.price * self.quality
-        total_other = other.price * other.quality
-        return total + total_other
+        if isinstance(other, self.__class__):
+            total = self.price * self.quality
+            total_other = other.price * other.quality
+            return total + total_other
+        else:
+            raise TypeError
 
 
 class NextProduct:

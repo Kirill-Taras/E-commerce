@@ -98,3 +98,19 @@ def test_lawngrass():
                  )
     assert grass.color == "green"
     assert grass.description == "Nice"
+
+
+def test_add_product_raise():
+    prod1 = Product("Сыр", "С дырками", 2, 20)
+    prod2 = Product("Колбаса", "Вареная", 10, 10)
+    assert prod1 + prod2 == 140
+    phone_1 = Smartphone("Apple 13",
+                         "Apple phone",
+                         10,
+                         50000,
+                         4,
+                         "13",
+                         128,
+                         "green")
+    with pytest.raises(TypeError):
+        prod1 + phone_1

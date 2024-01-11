@@ -150,7 +150,7 @@ class Smartphone(Product):
                  description: str,
                  quality: int,
                  price: float,
-                 performance: str,
+                 performance: int,
                  model: str,
                  memory: int,
                  color: str

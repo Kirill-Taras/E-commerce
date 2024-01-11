@@ -113,4 +113,4 @@ def test_add_product_raise():
                          128,
                          "green")
     with pytest.raises(TypeError):
-        prod1 + phone_1
+        phone_1 + prod2

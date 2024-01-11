@@ -2,6 +2,15 @@ import json
 from abc import ABC, abstractmethod
 
 
+class MixinLog:
+
+    def __init__(self):
+        print(self.__repr__())
+
+    def __repr__(self):
+        return f"Создан новый товар."
+
+
 class Category:
     """Класс категорий"""
 
@@ -61,6 +70,7 @@ class Product(ABC):
 
     @abstractmethod
     def __init__(self, name: str, description: str, quality: int, price: float):
+        super().__init__()
         self.__name = name  # название продукта
         self.__description = description  # описание продукта
         self.__quality = quality  # количество в наличии
@@ -146,7 +156,7 @@ class NextProduct:
             raise StopIteration
 
 
-class Smartphone(Product):
+class Smartphone(Product, MixinLog):
 
     def __init__(self, name: str,
                  description: str,
@@ -163,8 +173,18 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
 
+    def __repr__(self):
+        return (f"Создан новый товар с атрибутами: name: {self.name},"
+                f"description: {self.description},"
+                f"quality: {self.quality},"
+                f"price: {self.price},"
+                f"performance: {self.performance},"
+                f"model: {self.model},"
+                f"memory: {self.memory},"
+                f"color: {self.color}")
 
-class LawnGrass(Product):
+
+class LawnGrass(Product, MixinLog):
 
     def __init__(self, name: str,
                  description: str,
@@ -178,3 +198,31 @@ class LawnGrass(Product):
         self.country = country
         self.period = period
         self.color = color
+
+    def __repr__(self):
+        return (f"Создан новый товар с атрибутами: name: {self.name},"
+                f"description: {self.description},"
+                f"quality: {self.quality},"
+                f"price: {self.price},"
+                f"country: {self.country},"
+                f"period: {self.period},"
+                f"color: {self.color}")
+
+
+phone_1 = Smartphone("Apple 13",
+                         "Apple phone",
+                         10,
+                         50000,
+                         4,
+                         "13",
+                         128,
+                         "green")
+
+grass = LawnGrass("Grass  Super",
+                 "Nice",
+                 15,
+                 1000,
+                "USA",
+                "2 days",
+                 "green"
+                 )

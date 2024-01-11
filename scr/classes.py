@@ -16,6 +16,17 @@ class Category:
         Category.count_category += 1
         Category.category_list.append(self)
 
+    def add_product(self, product):
+        """
+        Добавление продукта в категорию.
+        :param product: Продукт, который нужно добавить
+        """
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.count_products += 1
+        else:
+            raise ValueError("Невозможно добавить объект")
+
     @property
     def products(self):
         return self.__products
@@ -106,9 +117,12 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quality} шт."
 
     def __add__(self, other):
-        total = self.price * self.quality
-        total_other = other.price * other.quality
-        return total + total_other
+        if isinstance(other, self.__class__):
+            total = self.price * self.quality
+            total_other = other.price * other.quality
+            return total + total_other
+        else:
+            raise TypeError
 
 
 class NextProduct:
@@ -129,14 +143,36 @@ class NextProduct:
         else:
             raise StopIteration
 
-#
-# Category.products_list = list()
-# cat = Category("Елочные игрушки", "На НГ")
-# prod1 = Product("Сыр", "С дырками", 2, 100.50)
-# prod2 = Product("Gbdj", "С дырками", 2, 100.50)
-# prod3 = Product("qqq", "С дырками", 2, 100.50)
-# print(cat)
-#
-#
-# r = NextProduct(cat)
-# print(list(r))
+
+class Smartphone(Product):
+
+    def __init__(self, name: str,
+                 description: str,
+                 quality: int,
+                 price: float,
+                 performance: int,
+                 model: str,
+                 memory: int,
+                 color: str
+                 ):
+        super().__init__(name, description, quality, price)
+        self.performance = performance
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+
+    def __init__(self, name: str,
+                 description: str,
+                 quality: int,
+                 price: float,
+                 country: str,
+                 period: str,
+                 color: str
+                 ):
+        super().__init__(name, description, quality, price)
+        self.country = country
+        self.period = period
+        self.color = color

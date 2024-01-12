@@ -8,7 +8,7 @@ class MixinLog:
         print(self.__repr__())
 
     def __repr__(self):
-        return f"Создан новый товар."
+        return f"Создан новый товар:"
 
 
 class Category:
@@ -68,15 +68,14 @@ class Product(ABC):
 
     product_list = list()
 
-    @abstractmethod
     def __init__(self, name: str, description: str, quality: int, price: float):
-        super().__init__()
         self.__name = name  # название продукта
         self.__description = description  # описание продукта
         self.__quality = quality  # количество в наличии
         self.__price = price  # цена
         Category.products_list.append(self)
         Category.count_products = len(Category.products_list)
+        super().__init__()
 
     @property
     def name(self):
@@ -136,6 +135,10 @@ class Product(ABC):
         else:
             raise TypeError
 
+    @abstractmethod
+    def work(self):
+        pass
+
 
 class NextProduct:
     """Итератор, возвращающий каждый продукт по очереди."""
@@ -167,14 +170,14 @@ class Smartphone(Product, MixinLog):
                  memory: int,
                  color: str
                  ):
-        super().__init__(name, description, quality, price)
         self.performance = performance
         self.model = model
         self.memory = memory
         self.color = color
+        super().__init__(name, description, quality, price)
 
     def __repr__(self):
-        return (f"Создан новый товар с атрибутами: name: {self.name},"
+        return (f"{super().__repr__()} name:{self.name},"
                 f"description: {self.description},"
                 f"quality: {self.quality},"
                 f"price: {self.price},"
@@ -182,6 +185,9 @@ class Smartphone(Product, MixinLog):
                 f"model: {self.model},"
                 f"memory: {self.memory},"
                 f"color: {self.color}")
+
+    def work(self):
+        return 1
 
 
 class LawnGrass(Product, MixinLog):
@@ -194,13 +200,13 @@ class LawnGrass(Product, MixinLog):
                  period: str,
                  color: str
                  ):
-        super().__init__(name, description, quality, price)
         self.country = country
         self.period = period
         self.color = color
+        super().__init__(name, description, quality, price)
 
     def __repr__(self):
-        return (f"Создан новый товар с атрибутами: name: {self.name},"
+        return (f"{super().__repr__()} name: {self.name},"
                 f"description: {self.description},"
                 f"quality: {self.quality},"
                 f"price: {self.price},"
@@ -208,21 +214,27 @@ class LawnGrass(Product, MixinLog):
                 f"period: {self.period},"
                 f"color: {self.color}")
 
+    def work(self):
+        return 2
 
-phone_1 = Smartphone("Apple 13",
-                         "Apple phone",
-                         10,
-                         50000,
-                         4,
-                         "13",
-                         128,
-                         "green")
 
-grass = LawnGrass("Grass  Super",
-                 "Nice",
-                 15,
-                 1000,
-                "USA",
-                "2 days",
-                 "green"
-                 )
+# phone_1 = Smartphone("Apple 13",
+#                          "Apple phone",
+#                          10,
+#                          50000,
+#                          4,
+#                          "13",
+#                          128,
+#                          "green")
+#
+# grass = LawnGrass("Grass  Super",
+#                  "Nice",
+#                  15,
+#                  1000,
+#                 "USA",
+#                 "2 days",
+#                  "green")
+#
+# print(Category.products_list)
+# print(Category.get_products)
+# print(Category.count_products)

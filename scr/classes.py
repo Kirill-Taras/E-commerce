@@ -63,7 +63,14 @@ class Category:
         return f"{self.name}, количество продуктов: {self.__len__()} шт."
 
 
-class Product(ABC):
+class ProductABC(ABC):
+
+    @abstractmethod
+    def __repr__(self):
+        pass
+
+
+class Product(ProductABC):
     """Класс продуктов"""
 
     product_list = list()
@@ -135,9 +142,8 @@ class Product(ABC):
         else:
             raise TypeError
 
-    @abstractmethod
-    def work(self):
-        pass
+    def __repr__(self):
+        return f"{self.name}"
 
 
 class NextProduct:
@@ -186,9 +192,6 @@ class Smartphone(Product, MixinLog):
                 f"memory: {self.memory},"
                 f"color: {self.color}")
 
-    def work(self):
-        return 1
-
 
 class LawnGrass(Product, MixinLog):
 
@@ -213,28 +216,3 @@ class LawnGrass(Product, MixinLog):
                 f"country: {self.country},"
                 f"period: {self.period},"
                 f"color: {self.color}")
-
-    def work(self):
-        return 2
-
-
-# phone_1 = Smartphone("Apple 13",
-#                          "Apple phone",
-#                          10,
-#                          50000,
-#                          4,
-#                          "13",
-#                          128,
-#                          "green")
-#
-# grass = LawnGrass("Grass  Super",
-#                  "Nice",
-#                  15,
-#                  1000,
-#                 "USA",
-#                 "2 days",
-#                  "green")
-#
-# print(Category.products_list)
-# print(Category.get_products)
-# print(Category.count_products)

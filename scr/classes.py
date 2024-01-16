@@ -1,4 +1,14 @@
 import json
+from abc import ABC, abstractmethod
+
+
+class MixinLog:
+
+    def __init__(self):
+        print(self.__repr__())
+
+    def __repr__(self):
+        return f"Создан новый товар:"
 
 
 class Category:
@@ -53,7 +63,14 @@ class Category:
         return f"{self.name}, количество продуктов: {self.__len__()} шт."
 
 
-class Product:
+class ProductABC(ABC):
+
+    @abstractmethod
+    def __repr__(self):
+        pass
+
+
+class Product(ProductABC):
     """Класс продуктов"""
 
     product_list = list()
@@ -65,6 +82,7 @@ class Product:
         self.__price = price  # цена
         Category.products_list.append(self)
         Category.count_products = len(Category.products_list)
+        super().__init__()
 
     @property
     def name(self):
@@ -124,6 +142,9 @@ class Product:
         else:
             raise TypeError
 
+    def __repr__(self):
+        return f"{self.name}"
+
 
 class NextProduct:
     """Итератор, возвращающий каждый продукт по очереди."""
@@ -144,7 +165,7 @@ class NextProduct:
             raise StopIteration
 
 
-class Smartphone(Product):
+class Smartphone(Product, MixinLog):
 
     def __init__(self, name: str,
                  description: str,
@@ -155,14 +176,24 @@ class Smartphone(Product):
                  memory: int,
                  color: str
                  ):
-        super().__init__(name, description, quality, price)
         self.performance = performance
         self.model = model
         self.memory = memory
         self.color = color
+        super().__init__(name, description, quality, price)
+
+    def __repr__(self):
+        return (f"{super().__repr__()} name:{self.name},"
+                f"description: {self.description},"
+                f"quality: {self.quality},"
+                f"price: {self.price},"
+                f"performance: {self.performance},"
+                f"model: {self.model},"
+                f"memory: {self.memory},"
+                f"color: {self.color}")
 
 
-class LawnGrass(Product):
+class LawnGrass(Product, MixinLog):
 
     def __init__(self, name: str,
                  description: str,
@@ -172,7 +203,16 @@ class LawnGrass(Product):
                  period: str,
                  color: str
                  ):
-        super().__init__(name, description, quality, price)
         self.country = country
         self.period = period
         self.color = color
+        super().__init__(name, description, quality, price)
+
+    def __repr__(self):
+        return (f"{super().__repr__()} name: {self.name},"
+                f"description: {self.description},"
+                f"quality: {self.quality},"
+                f"price: {self.price},"
+                f"country: {self.country},"
+                f"period: {self.period},"
+                f"color: {self.color}")

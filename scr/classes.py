@@ -1,6 +1,8 @@
 import json
 from abc import ABC, abstractmethod
 
+from scr.class_error import NoneProductsError
+
 
 class MixinLog:
 
@@ -31,11 +33,12 @@ class Category:
         Добавление продукта в категорию.
         :param product: Продукт, который нужно добавить
         """
-        if isinstance(product, Product):
-            self.__products.append(product)
-            Category.count_products += 1
-        else:
-            raise ValueError("Невозможно добавить объект")
+        try:
+            if isinstance(product, Product):
+                self.__products.append(product)
+                Category.count_products += 1
+        except ValueError:
+            raise ValueError("Невозможно добавить товар с нулевым количеством")
 
     @property
     def products(self):
@@ -61,6 +64,17 @@ class Category:
 
     def __str__(self):
         return f"{self.name}, количество продуктов: {self.__len__()} шт."
+
+    def average_price(self):
+        average = 0
+        try:
+            if self.__products:
+                total_price = sum(prod.price for prod in self.__products)
+                average = total_price / len(self.__products)
+        except ZeroDivisionError:
+            raise NoneProductsError
+        finally:
+            return average
 
 
 class ProductABC(ABC):

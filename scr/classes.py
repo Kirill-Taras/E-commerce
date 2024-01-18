@@ -71,12 +71,10 @@ class Category:
             if self.__products:
                 total_price = sum(prod.price for prod in self.__products)
                 average = total_price / len(self.__products)
-            elif not self.__products:
-                raise NoneProductsError
-            return average
-
-        except NoneProductsError:
+        except ZeroDivisionError:
             raise NoneProductsError
+        finally:
+            return average
 
 
 class ProductABC(ABC):
